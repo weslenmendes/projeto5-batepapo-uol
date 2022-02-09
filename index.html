@@ -1,16 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Batepapo UOL</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Bate-Papo UOL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/ico" href="assets/favicon.ico"/>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
   </head>
   <body>
-    <h1>Hello World</h1>
 
+    <header>
+      <img src="assets/logo-header.png" alt="Batepapo UOL"/>
+      <div class="menu">
+        <ion-icon name="people"></ion-icon>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="messages">
+        <div class="message status-message">
+          <p><span>(09:21:45)</span> <em>João</em> entra na sala...</p>
+        </div>
+
+        <div class="message">
+          <p><span>(09:22:28)</span> <em>João</em> para <em>Todos</em>: Bom dia</p>
+        </div>
+
+        <div class="message">
+          
+          <p><span>(09:22:28)</span> <em>Maria</em> para <em>João</em>: Oi João :)</p>
+        </div>
+
+        <div class="message reserved">
+          <p><span>(09:22:48)</span> <em>João</em> reservadamente para <em>Maria</em>: Oi gatinha quer tc?</p>
+        </div>
+
+        <div class="message status-message">
+          <p><span>(09:22:58)</span> <em>Maria</em> sai da sala...</p>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      <div class="input-container">
+        <input type="text" placeholder="Escreva aqui..."/>
+        <ion-icon name="paper-plane-outline"></ion-icon>
+      </div>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
