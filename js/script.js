@@ -77,11 +77,8 @@ function checkIfMessagesHaveChanged(data) {
   }
 }
 
-getMessages();
+idInterval = setInterval(getMessages, 3000);
 
-
-// Incluir msgs no HTML
-// Criar o HTML de uma mensagem e o tipo da mensagem
 // A cada 3s deve ser feito uma nova requisição
 // Sempre que uma mensagem for adiciona, o chat deve rolar para baixo
 // Utilizar o scrollIntoView()
