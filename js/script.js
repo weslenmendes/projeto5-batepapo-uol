@@ -5,7 +5,6 @@ const infoUser = {
   name: "todos"
 };
 
-// Fazer requisição das mensagens do servidor
 function getMessages() {
   const URL = "https://mock-api.driven.com.br/api/v4/uol/messages";
   const req = axios.get(URL);
@@ -66,6 +65,8 @@ function createHTMLToMessages() {
 function messagesIntoHTML(html) {
   let sectionMessages = document.querySelector(".messages");  
   sectionMessages.innerHTML = html;
+
+  scrollToLastMessage();
 }
 
 function checkIfMessagesHaveChanged(data) {
@@ -77,8 +78,11 @@ function checkIfMessagesHaveChanged(data) {
   }
 }
 
-idInterval = setInterval(getMessages, 3000);
+function scrollToLastMessage() {
+  const allMessages = document.querySelectorAll(".message");
+  const lastMessage = allMessages[allMessages.length - 1];
+  
+  lastMessage.scrollIntoView({ behavior: "smooth" });
+}
 
-// A cada 3s deve ser feito uma nova requisição
-// Sempre que uma mensagem for adiciona, o chat deve rolar para baixo
-// Utilizar o scrollIntoView()
+idInterval = setInterval(getMessages, 3000);
