@@ -1,9 +1,10 @@
 let messages = null;
-let idInterval = null;
-let temporaryUsername = "todos";
 
-const infoUser = {
-  name: "todos"
+const userInfo = {
+  name: "todos",
+  temporaryUsername: "todos",
+  idIntervalUpdate: null,
+  idIntervalKeepLoggedIn: null,
 };
 
 function getMessages() {
@@ -37,7 +38,7 @@ function createHTMLToMessages() {
   if (messages) {
     messages.forEach((message) => {
       HTMLMessage = "";
-      const privateMessageCondition = message.type === "private_message" && message.to.toLowerCase() === infoUser.name;
+      const privateMessageCondition = message.type === "private_message" && message.to.toLowerCase() === userInfo.name;
 
       if (message.type === "status") {
         classMessage = "message status-message";
@@ -90,16 +91,20 @@ function registerUser(username) {
   const URL = "https://mock-api.driven.com.br/api/v4/uol/participants ";
   const request = axios.post(URL, { name: username });
 
-  temporaryUsername = username;
+  userInfo.temporaryUsername = username;
 
   request.then(registerSuccess);
   request.catch(registerFailed);
 }
 
 function registerSuccess() {
-  infoUser.name = temporaryUsername;
+  userInfo.name = userInfo.temporaryUsername;
+
   getMessages();
-  idInterval = setInterval(getMessages, 3000);
+  keepUserLoggedIn();
+  
+  userInfo.idIntervalUpdate = setInterval(getMessages, 3000);
+  userInfo.idIntervalKeepLoggedIn = setInterval(keepUserLoggedIn, 5000);
 }
 
 function registerFailed(error) {
@@ -109,12 +114,21 @@ function registerFailed(error) {
   init();
 }
 
+function keepUserLoggedIn() {
+  const URL = "https://mock-api.driven.com.br/api/v4/uol/status";
+  axios.post(URL, { name: userInfo.name });
+}
+
+function quit() {
+  clearInterval(userInfo.idIntervalUpdate);
+  clearInterval(userInfo.idIntervalKeepLoggedIn);
+}
+
 function init() {
   const name = prompt("Qual é o seu nome?");
   
   registerUser(name);
 }
 
-init();
-
-
+window.onload = init;
+window.onbeforeunload = quit;
