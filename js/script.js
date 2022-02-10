@@ -1,5 +1,6 @@
 let messages = null;
 let idInterval = null;
+let temporaryUsername = "todos";
 
 const infoUser = {
   name: "todos"
@@ -85,4 +86,35 @@ function scrollToLastMessage() {
   lastMessage.scrollIntoView({ behavior: "smooth" });
 }
 
-idInterval = setInterval(getMessages, 3000);
+function registerUser(username) {
+  const URL = "https://mock-api.driven.com.br/api/v4/uol/participants ";
+  const request = axios.post(URL, { name: username });
+
+  temporaryUsername = username;
+
+  request.then(registerSuccess);
+  request.catch(registerFailed);
+}
+
+function registerSuccess() {
+  infoUser.name = temporaryUsername;
+  getMessages();
+  idInterval = setInterval(getMessages, 3000);
+}
+
+function registerFailed(error) {
+  console.log("Error: " + error.response.status);
+  console.log("Message: " + error.response.data);
+
+  init();
+}
+
+function init() {
+  const name = prompt("Qual é o seu nome?");
+  
+  registerUser(name);
+}
+
+init();
+
+
