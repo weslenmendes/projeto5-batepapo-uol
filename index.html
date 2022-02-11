@@ -49,10 +49,13 @@
       </section>
     </main>
 
-    <footer>
+    <footer onclick="focusInput()">
       <div class="input-container">
-        <input type="text" placeholder="Escreva aqui..."/>
-        <ion-icon name="paper-plane-outline"></ion-icon>
+        <input type="text" class="input" placeholder="Escreva aqui..." autofocus/>
+
+        <button class="send-button" onclick="sendMessage()" data-identifier="send-message">
+          <ion-icon name="paper-plane-outline"></ion-icon>
+        </button>
       </div>
     </footer>
 

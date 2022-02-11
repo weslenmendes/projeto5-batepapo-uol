@@ -38,21 +38,21 @@ function createHTMLToMessages() {
   if (messages) {
     messages.forEach((message) => {
       HTMLMessage = "";
-      const privateMessageCondition = message.type === "private_message" && message.to.toLowerCase() === userInfo.name;
+      const privateMessageCondition = message.type === "private_message" && (message.to.toLowerCase() === userInfo.name.toLowerCase() || message.from.toLowerCase() === userInfo.name.toLowerCase());
 
       if (message.type === "status") {
         classMessage = "message status-message";
-        HTMLMessage = `<div class="${classMessage}">
+        HTMLMessage = `<div class="${classMessage}" data-identifier="message">
         <p><span>${message.time}</span> <em>${message.from}</em> ${message.text}</p>
         </div>`;
       } else if (privateMessageCondition) {
         classMessage = "message reserved";
-        HTMLMessage = `<div class="${classMessage}">
+        HTMLMessage = `<div class="${classMessage}" data-identifier="message">
         <p><span>${message.time}</span> <em>${message.from}</em> reservadamente para <em>${message.to}</em>: ${message.text}</p>
         </div>`;
       } else {
         classMessage = "message";
-        HTMLMessage = `<div class="${classMessage}">
+        HTMLMessage = `<div class="${classMessage}" data-identifier="message">
         <p><span>${message.time}</span> <em>${message.from}</em> para <em>${message.to}</em>: ${message.text}</p>
         </div>`;
       }
@@ -68,6 +68,7 @@ function messagesIntoHTML(html) {
   let sectionMessages = document.querySelector(".messages");  
   sectionMessages.innerHTML = html;
 
+  addKeyDownEvent();
   scrollToLastMessage();
 }
 
@@ -117,6 +118,46 @@ function registerFailed(error) {
 function keepUserLoggedIn() {
   const URL = "https://mock-api.driven.com.br/api/v4/uol/status";
   axios.post(URL, { name: userInfo.name });
+}
+
+function addKeyDownEvent() {
+  const input = document.querySelector(".input");
+
+  input.addEventListener("keydown", (e) => {
+    const keyPressed = e.key;
+
+    if (keyPressed === "Enter") {
+      sendMessage();
+      return;
+    } else {
+      return;
+    }
+  });
+}
+
+function sendMessage() {
+  const input = document.querySelector(".input");
+  const inputText = input.value;
+  const messageTo = "Weslen";
+  const messageObj = {
+    from: userInfo.name,
+    to: messageTo,
+    text: inputText,
+    type: messageTo !== "todos" ? "private_message" : "message",
+  };
+
+  if (inputText) {
+    const URL = "https://mock-api.driven.com.br/api/v4/uol/messages";
+    const request = axios.post(URL, messageObj);
+
+    input.value = "";
+    request.then(() => getMessages());
+    request.catch(() => window.location.reload());
+  }
+}
+
+function focusInput() {
+  document.querySelector(".input").focus();
 }
 
 function quit() {
