@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  word-break: break-all;
 }
 
 html {
@@ -10,6 +11,11 @@ html {
 body {
   background-color: #e5e5e5;
   min-width: 320px;
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none;
 }
 
 header {
@@ -46,8 +52,16 @@ main {
   width: 100%;
 }
 
-.messages {
-  margin: 106px 0 102px 0;
+.container .messages {
+  width: 100%;
+  height: calc(100vh - 160px);
+  padding: 10px 0;
+
+  position: fixed;
+  top: 80px;
+  left: 0;
+
+  overflow-y: auto;
 }
 
 .message {
@@ -102,23 +116,59 @@ footer {
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .input-container input {
+  width: 100%;
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
-  flex: 1;
   outline: none;
   border: none;
+
   transition: all 0.3s ease;
+
+  flex: 1;
 }
 
 .input-container input::placeholder {
+  font-family: "Roboto", sans-serif;
   color: #000;
   font-style: italic;
 }
 
 .input-container ion-icon {
   font-size: 26px;
+}
+
+.box {
+  width: 80%;
+  text-overflow: ellipsis;
+}
+
+.box .send-to {
+  width: 100%;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 21px;
+  color: #505050;
+  margin-left: 2px;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box .send-to .to {
+  max-width: 50%;
+  margin-left: 4px;
+  margin-right: 4px;
+
+  display: inline-block;
+  word-break: keep-all;
+  text-overflow: ellipsis;
+
+  overflow: hidden;
 }
 
 .send-button {
@@ -129,8 +179,300 @@ footer {
   background-color: transparent;
   cursor: pointer;
   border-radius: 20px;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.initial-page {
+  width: 100%;
+  height: 100vh;
+  padding: 72px 57px 0 57px;
+  background-color: #fff;
+
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+}
+
+.animation {
+  transition: all 0.3s ease;
+}
+
+.initial-page img {
+  height: 92px;
+  width: 130px;
+}
+
+.initial-page main {
+  height: 100%;
+  min-width: 360px;
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.initial-page section {
+  max-width: 450px;
+  width: 100%;
+  margin-top: 94px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.initial-page section input {
+  height: 54px;
+  max-width: 261px;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px;
+}
+
+.initial-page section input::-webkit-input-placeholder {
+  text-align: center;
+  color: #aeaeae;
+}
+
+.initial-page section input:-moz-placeholder {
+  text-align: center;
+  color: #aeaeae;
+}
+
+.initial-page .input-name {
+  font-family: "Roboto", sans-serif;
+}
+
+.btn {
+  width: 109px;
+  height: 45px;
+  background-color: #e7e7e7;
+  margin-top: 15px;
+
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+  color: #696969;
+
+  border: none;
+  outline: none;
+  border-radius: 9px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:hover {
+  background-color: #d69b31;
+  color: white;
+}
+
+.initial-page section.hidden,
+.loading.hidden {
+  display: none;
+}
+
+.initial-page.hidden {
+  transform: translateY(-100%);
+}
+
+.loading {
+  max-width: 360px;
+  width: 100%;
+  height: max-content;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loading img {
+  width: 100%;
+  height: 100%;
+}
+
+.loading p {
+  font-size: 18px;
+  font-weight: 500;
+
+  position: absolute;
+  bottom: 40px;
+  left: 40%;
+}
+
+.alert-message {
+  font-size: 16px;
+  margin: 20px 0;
+  max-width: 70%;
+  text-align: center;
+}
+
+.background.hidden {
+  opacity: 0;
+}
+
+.background {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+
+  opacity: 1;
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  cursor: pointer;
+}
+
+.sidebar {
+  max-width: 259px;
+  width: 100%;
+  background-color: #fff;
+  padding: 0 17px 17px 17px;
+
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  right: -100%;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  transition: all 0.3s ease;
+}
+
+.sidebar.show {
+  right: 0;
+}
+
+.sidebar header {
+  height: 84px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: initial;
+  box-shadow: none;
+}
+
+.sidebar header p {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.users {
+  width: 100%;
+  max-height: 60%;
+  height: max-content;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.users .user .info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.users .user .info p {
+  text-overflow: ellipsis;
+}
+
+.users div {
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  text-overflow: clip;
+
+  margin-top: 12px;
+}
+
+.users div:first-child {
+  margin-top: 0;
+}
+
+.user ion-icon {
+  font-size: 22px;
+  margin-right: 7px;
+}
+
+.users p {
+  flex: 1;
+  height: initial;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
+.users .user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.users .user div:last-child {
+  margin: 0;
+}
+
+.user div.hidden {
+  display: none;
+}
+
+.message-type .options {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-type .option-1,
+.message-type .option-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.message-type .option-1 p,
+.message-type .option-2 p {
+  margin-left: 7px;
+}
+
+.message-type .option-1 div:first-child,
+.message-type .option-2 div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.message-type .option-2 {
+  margin-top: 12px;
+}
+
+.message-type ion-icon {
+  font-size: 22px;
 }
