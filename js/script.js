@@ -115,9 +115,10 @@ function registerSuccess() {
   userInfo.name = userInfo.temporaryUsername;
   messageObj.from = userInfo.name;
 
-  getUsers();
   getMessages();
+  getUsers();
   showLayout();
+  scrollToLastMessage();
   removeInitialPage();
   keepUserLoggedIn();
 
